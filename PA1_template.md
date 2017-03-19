@@ -82,17 +82,13 @@ colnames(df) <- c("interval", "average.steps")
 # plot average steps by interval
 library(ggplot2)
 p <- ggplot(data = df , aes(interval, average.steps))
-pg <- p + geom_point(alpha = 0.6, color = "grey5")
-pgs <- pg + geom_smooth(color = "darkred") 
+pg <- p + geom_line( color = "darkred")
+pgs <- pg  
 pgsl <- pgs + labs(title = "Average Number of Steps/Day by 5-Minute Interval",
                    subtitle = "NAs Removed",
                    x = "5-Minute Intervals",
                    y = "Average Number of Steps per Day")
 print(pgsl)
-```
-
-```
-## `geom_smooth()` using method = 'loess'
 ```
 
 ![plot of chunk tsplot1](figure/tsplot1-1.png)
@@ -248,20 +244,6 @@ The imputed values do not seem to change the apparent patterns in the data.
 # 1.  Create a new factor variable in the dataset with two levels-"weekday" 
 # and "weekend" indicating whether a given date is a weekday or weekend day.
 library(lubridate)
-```
-
-```
-## 
-## Attaching package: 'lubridate'
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     date
-```
-
-```r
 dates <- as_date(AM_complete$date)
 weekday <- weekdays(dates)
 
@@ -290,18 +272,14 @@ colnames(agg) <- c("interval", "kind.of.day", "average.steps")
 
 library(ggplot2)
 p <- ggplot(data = agg , aes(interval, average.steps))
-pg <- p + geom_point(alpha = 0.6, color = "grey6")   
-pgg <- pg +  geom_smooth(color = "darkblue")
+pg <- p + geom_line(color = "grey6")   
+pgg <- pg 
 pggf <- pgg + facet_wrap(~kind.of.day)
 pggfl <- pggf + labs(title = "Average Number of Steps/Day by 5-Minute Interval",
                      subtitle = "NAs Replaced with Imputed Values by Gibbs Sampling",
                      x = "5-Minute Intervals",
                      y = "Average Number of Steps per Day")
 print(pggfl)
-```
-
-```
-## `geom_smooth()` using method = 'loess'
 ```
 
 ![plot of chunk tsplot2](figure/tsplot2-1.png)
